@@ -470,7 +470,8 @@ export default function Home() {
       );
 
       const data = ffmpeg.FS("readFile", "medley.mp3");
-      const blob = new Blob([data.buffer], { type: "audio/mpeg" });
+      const safeBuffer = new Uint8Array(data).buffer;
+      const blob = new Blob([safeBuffer], { type: "audio/mpeg" });
       const url = URL.createObjectURL(blob);
       setOutputUrl(url);
     } finally {
